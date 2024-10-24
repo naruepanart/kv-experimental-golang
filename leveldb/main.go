@@ -7,13 +7,15 @@ import (
 )
 
 func main() {
-	db, _ := leveldb.OpenFile("./leveldb/data", nil)
+	db, _ := leveldb.OpenFile("./data", nil)
 	defer db.Close()
 
 	const count = 100000
 	batch := new(leveldb.Batch)
 	for i := 0; i < count; i++ {
-		batch.Put([]byte(fmt.Sprintf("key:%d", i)), []byte(fmt.Sprintf("value:%d", i)))
+		key := fmt.Sprintf("key:%d", i)
+		value := fmt.Sprintf("value:%d", i)
+		batch.Put([]byte(key), []byte(value))
 	}
 	db.Write(batch, nil)
 }
