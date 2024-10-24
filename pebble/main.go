@@ -7,12 +7,14 @@ import (
 )
 
 func main() {
-	db, _ := pebble.Open("./pebble/data", &pebble.Options{})
+	db, _ := pebble.Open("./data", &pebble.Options{})
 
 	const count = 100000
 	batch := db.NewBatch()
 	for i := 0; i < count; i++ {
-		batch.Set([]byte(fmt.Sprintf("key:%d", i)), []byte(fmt.Sprintf("value:%d", i)), pebble.NoSync)
+		key := fmt.Sprintf("key:%d", i)
+		value := fmt.Sprintf("value:%d", i)
+		batch.Set([]byte(key), []byte(value), pebble.NoSync)
 	}
 	batch.Commit(pebble.NoSync)
 
