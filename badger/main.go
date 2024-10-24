@@ -7,7 +7,7 @@ import (
 )
 
 func main() {
-	opt := badger.DefaultOptions("./badger/data")
+	opt := badger.DefaultOptions("./data")
 	opt.NumVersionsToKeep = 1
 	opt.SyncWrites = false
 	db, _ := badger.Open(opt)
@@ -17,7 +17,9 @@ func main() {
 	wb := db.NewWriteBatch()
 	defer wb.Cancel()
 	for i := 0; i < count; i++ {
-		wb.Set([]byte(fmt.Sprintf("key:%d", i)), []byte(fmt.Sprintf("value:%d", i)))
+		key := fmt.Sprintf("key:%d", i)
+		value := fmt.Sprintf("value:%d", i)
+		wb.Set([]byte(key), []byte(value))
 	}
 	wb.Flush()
 }
