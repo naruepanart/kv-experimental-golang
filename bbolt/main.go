@@ -23,7 +23,8 @@ func main() {
 		}
 		for i := 0; i < count; i++ {
 			key := fmt.Sprintf("key:%d", i)
-			if err := bucket.Put([]byte(key), []byte(fmt.Sprintf("value:%d", i))); err != nil {
+			value := fmt.Sprintf("value:%d", i)
+			if err := bucket.Put([]byte(key), []byte(value)); err != nil {
 				return err
 			}
 		}
